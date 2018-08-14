@@ -26,10 +26,21 @@ collection = db.wq_access
 
 
 # 范围查找
-res = collection.find({}).sort("create_date", -1).limit(5)
-for i in list(res):
-    print(i['log'])
-    print(i['create_date'].strftime('%Y-%m-%d %H:%M:%S'))
+# res = collection.find({}).sort("create_date", -1).limit(5)
+# for i in list(res):
+#     print(i['log'])
+#     print(i['create_date'].strftime('%Y-%m-%d %H:%M:%S'))
 # 模糊查询
 # data2 = collection.find({"name":{"$regex":"real"}})
 # print('data2', list(data2))
+
+
+
+import time
+
+a = "2011-09-28 10:00:00"
+
+date_time = datetime.datetime.strptime(a,'%Y-%m-%d %H:%M:%S')
+print('date_time', type(date_time))
+
+

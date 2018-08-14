@@ -1,55 +1,101 @@
 {% extends 'base.html' %}
+{% load paginate_tags %}
+
 {% block title %}网签日志{% endblock %}
 {% block mainer %}
     <style type="text/css">
 
     </style>
+
+    <div class="layui-form">
+        <div class="layui-form-item">
+
+            <div class="layui-inline">
+                <label class="layui-form-label">启始时间</label>
+                <div class="layui-input-inline">
+                    <input type="text" class="layui-input" id="start" placeholder="yyyy-MM-dd HH:mm:ss" lay-key="6">
+                </div>
+            </div>
+
+
+            <div class="layui-inline">
+                <label class="layui-form-label">结束时间</label>
+                <div class="layui-input-inline">
+                    <input type="text" class="layui-input" id="end" placeholder="yyyy-MM-dd HH:mm:ss" lay-key="7">
+                </div>
+            </div>
+
+
+            <div class="layui-inline">
+                <label class="layui-form-label">筛选关键字</label>
+                <div class="layui-input-block">
+                    <input type="text" name="title" id="key_words" lay-verify="title" autocomplete="off"
+                           placeholder="请输入关键字"
+                           class="layui-input">
+                </div>
+            </div>
+
+
+            <div class="layui-inline">
+                <button class="layui-btn layui-btn-normal" id="search">筛选</button>
+
+            </div>
+
+
+        </div>
+
+    </div>
+
+
+
     <div class="body-div">
-        <div class="border">
-            {% for item in log_data %}
-                <p>{{ item.create_date }} - {{ item.log }}</p>
+
+
+        <div class="border" id="log_container">
+            {% for item in items %}
+                <p>{{ item.log }}</p>
             {% endfor %}
         </div>
+
+
+        {% paginate_tag data %}
+        {% include 'pagination.html' %}
 
 
     </div>
 
 {% endblock %}
 
-
-
 {% block script %}
 
+
     <script>
-    function AjaxGet(url, callBack) {
-    $.ajax({
-        url: url,
-        type: 'GET',
-        beforeSend: function (xhr) {
-            console.log('beforeSend')
-        }
 
-    }).done(function (resp) {
-        if (callBack) {
-            callBack(resp)
-        } else {
-            console.log('no callback')
-        }
-
-    }).fail(function (err) {
-        console.log('err', err.responseJSON)
-    })
-};
-
-    function mycallback(resp) {
-        console.log('111', resp)
-    }
-
-    var url = '/collector/wq/?action=get_data'
-    AjaxGet(url,mycallback);
+        laydate.render({
+            elem: '#start'
+            , type: 'datetime'
+        });
 
 
+        laydate.render({
+            elem: '#end'
+            , type: 'datetime'
+        });
 
 
+        $('#search').click(function () {
+
+            var start = $('#start').val()
+            var end = $('#end').val()
+            var key_words = $('#key_words').val()
+
+
+            var url = '/collector/wq/?start=' + start + '&end=' + end + '&key_words=' + key_words
+            location.href = url;
+
+
+            console.log('sdsd', start, end, key_words)
+
+        })
     </script>
 {% endblock script %}

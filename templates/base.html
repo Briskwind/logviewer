@@ -1,4 +1,5 @@
 {% load static %}
+
 <!DOCTYPE html>
 <html lang="zh_CN">
 <head>
@@ -7,9 +8,29 @@
     <title>神中日志管理平台</title>
     {% block header %}
         <link rel="stylesheet" href="{% static 'css/layui.css' %}">
-        <style>#container {
-            margin: 15px;
-        }</style>
+        <style>
+            #container {
+                margin: 15px;
+            }
+
+            .noselect {
+
+                padding-top: 20px;
+                text-align: center;
+            }
+
+            .current {
+                color: blue;
+                margin-right: 10px;
+            }
+
+            .noselect a {
+                margin-right: 10px;
+                border: 1px solid #dedede;
+                padding: 5px 10px;
+                cursor: pointer;
+            }
+        </style>
 
         <script charset="utf-8" type="text/javascript" src="{% static 'js/jquery-1.7.2.min.js' %}"></script>
     {% endblock header %}
@@ -70,7 +91,13 @@
     </div>
 {% endblock body %}
 
+
+{#    <script src="{% static 'js/layui.all.js' %}"></script>#}
+<script src="{% static 'js/laydate/laydate.js' %}"></script>
+
 {% block script %}
+
 {% endblock script %}
+
 </body>
 </html>
