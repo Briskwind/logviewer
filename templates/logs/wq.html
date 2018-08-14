@@ -29,9 +29,7 @@
             <div class="layui-inline">
                 <label class="layui-form-label">筛选关键字</label>
                 <div class="layui-input-block">
-                    <input type="text" name="title" id="key_words" lay-verify="title" autocomplete="off"
-                           placeholder="请输入关键字"
-                           class="layui-input">
+                    <input type="text" id="key_words" placeholder="请输入关键字" class="layui-input">
                 </div>
             </div>
 
@@ -71,6 +69,7 @@
 
     <script>
 
+
         laydate.render({
             elem: '#start'
             , type: 'datetime'
@@ -89,15 +88,14 @@
         var end = getQueryString('end');
         var key_words = getQueryString('key_words');
         if (start) {
-            $('#start').val(start)
+            $('#start').val(decodeURIComponent(start) )
         }
-
         if (end) {
-            $('#end').val(end)
+            $('#end').val(decodeURIComponent(end) )
         }
-
         if (key_words) {
-            $('#key_words').val(key_words)
+            var decode = decodeURIComponent(key_words)
+            $('#key_words').val(decode)
         }
 
 
@@ -107,23 +105,26 @@
             var end = $('#end').val()
             var key_words = $('#key_words').val()
 
+            var encode = encodeURIComponent(key_words)
 
-            var url = '/collector/wq/?start=' + start + '&end=' + end + '&key_words=' + key_words
+
+            var url = '/collector/wq/?start=' + start + '&end=' + end + '&key_words=' + encode
             location.href = url;
 
-
-            console.log('sdsd', start, end, key_words)
 
         })
 
 
         function getQueryString(name) {
             var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
-            var r = window.location.search.substr(1).match(reg);
-            if (r != null) return unescape(r[2]);
-            return ''
+            var r = window.location.search.substr(1).match(reg);  //获取url中"?"符后的字符串并正则匹配
+            var context = "";
+            if (r != null)
+                context = r[2];
+            reg = null;
+            r = null;
+            return context == null || context == "" || context == "undefined" ? "" : context;
         }
-
 
         $('.page').click(function () {
             var page = $(this).html()
