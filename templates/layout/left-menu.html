@@ -1,0 +1,20 @@
+<div class="layui-side-scroll">
+    <ul class="layui-nav layui-nav-tree" lay-filter="test">
+      {% for menu in menu_list %}
+
+        {% if menu.submenus %}
+          <li class="layui-nav-item layui-nav-itemed">
+            <a href="javascript:;"><i class="layui-icon layui-icon-{{ menu.icon }}"></i>&nbsp;&nbsp;{{ menu.name }}</a>
+            <dl class="layui-nav-child">
+              {% for submenu in menu.submenus %}
+              <dd style="text-indent:20px;" {% if submenu.href in request.get_full_path %}class="layui-this"{% endif %}><a href="{{ submenu.href }}" data-pjax>{{ submenu.name }}</a></dd>
+              {% endfor %}
+            </dl>
+          </li>
+        {% else %}
+          <li class="layui-nav-item {% if menu.href in request.get_full_path %}layui-this{% endif %}"><a href="{{ menu.href }}" data-pjax>{{ menu.name }}</a></li>
+        {% endif %}
+
+      {% endfor %}
+    </ul>
+</div>

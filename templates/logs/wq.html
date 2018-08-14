@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+{% block title %}网签日志{% endblock %}
+{% block mainer %}
+    <style type="text/css">
+
+    </style>
+    <div class="body-div">
+        <div class="border">
+            {% for item in log_data %}
+                <p>{{ item.create_date }} - {{ item.log }}</p>
+            {% endfor %}
+        </div>
+
+
+    </div>
+
+{% endblock %}
+
+
+
+{% block script %}
+
+    <script>
+    function AjaxGet(url, callBack) {
+    $.ajax({
+        url: url,
+        type: 'GET',
+        beforeSend: function (xhr) {
+            console.log('beforeSend')
+        }
+
+    }).done(function (resp) {
+        if (callBack) {
+            callBack(resp)
+        } else {
+            console.log('no callback')
+        }
+
+    }).fail(function (err) {
+        console.log('err', err.responseJSON)
+    })
+};
+
+    function mycallback(resp) {
+        console.log('111', resp)
+    }
+
+    var url = '/collector/wq/?action=get_data'
+    AjaxGet(url,mycallback);
+
+
+
+
+    </script>
+{% endblock script %}
