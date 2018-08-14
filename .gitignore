@@ -1,3 +1,5 @@
 .idea/
-
+__pycache__/
+*.log
+celerybeat-schedule
 db.sqlite3
