@@ -3,3 +3,4 @@ __pycache__/
 *.log
 celerybeat-schedule
 db.sqlite3
+logviewer/local_settings.py
