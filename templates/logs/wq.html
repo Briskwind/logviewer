@@ -97,5 +97,25 @@
             console.log('sdsd', start, end, key_words)
 
         })
+
+
+        function getQueryString(name) {
+            var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
+            var r = window.location.search.substr(1).match(reg);
+            if (r != null) return unescape(r[2]);
+            return ''
+        }
+
+
+        $('.page').click(function () {
+            var page = $(this).html()
+
+            var start = getQueryString('start');
+            var end = getQueryString('end');
+            var key_words = getQueryString('key_words');
+            location.href = '/collector/wq/?page=' + page + '&start=' + start + '&end=' + end + '&key_words=' + key_words
+
+        })
+
     </script>
 {% endblock script %}

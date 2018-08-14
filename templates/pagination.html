@@ -1,14 +1,14 @@
 <div id="pagenavi" class="noselect">
     {% if article_list.has_previous %}
-        <a class="previous-page" href="?page={{ article_list.previous_page_number }}">
+        <a class="previous-page page" href="?page={{ article_list.previous_page_number }}">
             <span class="icon-previous"></span>上一页
         </a>
     {% endif %}
 
     {% if first_page == current_page %}
-        <span class="first-page current">1</span>
+        <span class="first-page current page">1</span>
     {% else %}
-        <a href="?page=1" class="first-page">1</a>
+        <a  class="first-page page">1</a>
     {% endif %}
 
     {% if pages_first > 2 %}
@@ -17,9 +17,9 @@
 
     {% for page in pages %}
         {% if page == current_page %}
-            <span class="current h-padding">{{ page }}</span>
+            <span class="current h-padding page">{{ page }}</span>
         {% else %}
-            <a class="h-padding" href="?page={{ page }}">{{ page }}</a>
+            <a class="h-padding page">{{ page }}</a>
         {% endif %}
     {% endfor %}
 
@@ -29,14 +29,14 @@
 
     {% if last_page != 1 %}
         {% if last_page == current_page %}
-            <span class="current">{{ last_page }}</span>
+            <span class="current page">{{ last_page }}</span>
         {% else %}
-            <a href="?page={{ last_page }}">{{ last_page }}</a>
+            <a class="page">{{ last_page }}</a>
         {% endif %}
     {% endif %}
 
     {% if article_list.has_next %}
-        <a class="next-page" href="?page={{ article_list.next_page_number }}">
+        <a class="next-page page">
             下一页<span class="icon-next"></span>
         </a>
     {% endif %}
