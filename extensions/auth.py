@@ -12,9 +12,9 @@ from django.middleware.csrf import rotate_token
 
 from home.models import LogUser
 
-CRMUSER_SESSION_KEY = '_auth_xuser_id'
-HASH_CRMUSER_SESSION_KEY = '_auth_xuser_hash'
-BACKEND_CRMUSER_SESSION_KEY = '_auth_xuser_backend'
+LOGUSER_SESSION_KEY = '_auth_xuser_id'
+HASH_LOGUSER_SESSION_KEY = '_auth_xuser_hash'
+BACKEND_LOGUSER_SESSION_KEY = '_auth_xuser_backend'
 
 
 def md5hex(word):
@@ -44,7 +44,7 @@ def _get_user_session_key(request):
     # to convert it back to Python whenever we access it.
 
     try:
-        return LogUser._meta.pk.to_python(request.session[CRMUSER_SESSION_KEY])
+        return LogUser._meta.pk.to_python(request.session[LOGUSER_SESSION_KEY])
     except KeyError:
         return None
 
@@ -130,10 +130,10 @@ def login(request, user, backend=None):
     if hasattr(user, 'get_session_auth_hash'):
         session_auth_hash = user.get_session_auth_hash()
 
-    if CRMUSER_SESSION_KEY in request.session:
+    if LOGUSER_SESSION_KEY in request.session:
         if _get_user_session_key(request) != user.pk or (
                     session_auth_hash and
-                    not constant_time_compare(request.session.get(HASH_CRMUSER_SESSION_KEY, ''), session_auth_hash)):
+                    not constant_time_compare(request.session.get(HASH_LOGUSER_SESSION_KEY, ''), session_auth_hash)):
             # To avoid reusing another user's session, create a new, empty
             # session if the existing session corresponds to a different
             # authenticated user.
@@ -141,8 +141,8 @@ def login(request, user, backend=None):
     else:
         request.session.cycle_key()
 
-    request.session[CRMUSER_SESSION_KEY] = user._meta.pk.value_to_string(user)
-    request.session[HASH_CRMUSER_SESSION_KEY] = session_auth_hash
+    request.session[LOGUSER_SESSION_KEY] = user._meta.pk.value_to_string(user)
+    request.session[HASH_LOGUSER_SESSION_KEY] = session_auth_hash
     if hasattr(request, 'loguser'):
         request.loguser = user
     rotate_token(request)

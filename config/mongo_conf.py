@@ -1,7 +1,9 @@
 import datetime
 import pymongo
 
-client = pymongo.MongoClient(host='127.0.0.1', port=27017, tz_aware=False)
+from logviewer.settings import MONGO_HOST, MONGO_PORT
+
+client = pymongo.MongoClient(host=MONGO_HOST, port=MONGO_PORT, tz_aware=False)
 
 
 
@@ -11,7 +13,3 @@ def mongo_wrap(mongo_cursor):
         item['create_date'] = item['create_date'].strftime('%Y-%m-%d %H:%M:%S')
         tem_data.append(item)
     return tem_data
-
-
-
-

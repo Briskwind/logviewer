@@ -5,10 +5,9 @@ from django.utils.decorators import method_decorator
 from django.utils.html import strip_tags
 from django.views.decorators.csrf import csrf_protect
 from django.views.generic import TemplateView
-from rest_framework.views import APIView
 from django.shortcuts import render, redirect
 
-from extensions.auth import authenticate, LogPermissionError, login, CRMUSER_SESSION_KEY
+from extensions.auth import authenticate, LogPermissionError, login, LOGUSER_SESSION_KEY
 
 
 class LoginPage(TemplateView):
@@ -46,8 +45,7 @@ class LogOutView(View):
     view_name = 'logout'
 
     def get(self, request):
-        request.session.pop(CRMUSER_SESSION_KEY, None)
-        request.crmuser = None
+        request.session.pop(LOGUSER_SESSION_KEY, None)
+        request.loguser = None
 
         return redirect('/login')
-

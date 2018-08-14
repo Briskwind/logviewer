@@ -1,17 +1,15 @@
 import os
 import time
+import datetime
+from config.mongo_conf import client
+from logviewer.settings import WATCH_PATH
 from watchdog.observers import Observer
 from watchdog.events import FileSystemEventHandler
-
-import datetime
-import pymongo
-
-client = pymongo.MongoClient(host='127.0.0.1', port=27017, tz_aware=False)
-db = client.test
 
 
 def save_data(log_data):
     """ 保存到mongo db"""
+    db = client.test
     wq_access = db.wq_access
     for log in log_data[::-1]:
         data = {
@@ -23,6 +21,7 @@ def save_data(log_data):
 
 def get_last_log():
     """ 获取最新的日志信息"""
+    db = client.test
     wq_access = db.wq_access
     last_log = wq_access.find({}).sort("create_date", -1).limit(1)
     log = None
@@ -60,10 +59,9 @@ class FileEventHandler(FileSystemEventHandler):
 
 
 if __name__ == "__main__":
-    path = '/Users/xufengxu/tem_data/logs'
     event_handler = FileEventHandler()
     observer = Observer()
-    observer.schedule(event_handler, path, recursive=True)
+    observer.schedule(event_handler, WATCH_PATH, recursive=True)
     observer.start()
     try:
         while True:
