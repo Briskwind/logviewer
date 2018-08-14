@@ -83,6 +83,24 @@
         });
 
 
+        // 渲染关键字
+
+        var start = getQueryString('start');
+        var end = getQueryString('end');
+        var key_words = getQueryString('key_words');
+        if (start) {
+            $('#start').val(start)
+        }
+
+        if (end) {
+            $('#end').val(end)
+        }
+
+        if (key_words) {
+            $('#key_words').val(key_words)
+        }
+
+
         $('#search').click(function () {
 
             var start = $('#start').val()
@@ -110,9 +128,9 @@
         $('.page').click(function () {
             var page = $(this).html()
 
-            var start = getQueryString('start');
-            var end = getQueryString('end');
-            var key_words = getQueryString('key_words');
+            var start = $('#start').val()
+            var end = $('#end').val()
+            var key_words = $('#key_words').val()
             location.href = '/collector/wq/?page=' + page + '&start=' + start + '&end=' + end + '&key_words=' + key_words
 
         })
