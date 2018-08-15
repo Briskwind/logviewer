@@ -8,13 +8,17 @@ from logviewer.settings import MONGO_HOST, MONGO_PORT
 
 client = pymongo.MongoClient(host=MONGO_HOST, port=MONGO_PORT, tz_aware=False)
 
+# 日志存储数据库
+db = client.logs
 
-def mongo_wrap(mongo_cursor):
-    tem_data = []
-    for item in mongo_cursor:
-        item['create_date'] = item['create_date'].strftime('%Y-%m-%d %H:%M:%S')
-        if isinstance(item['_id'], ObjectId):
-            item['_id'] = str(item['_id'])
+# 网签 access.log
+ACCESS = db.access
 
-        tem_data.append(item)
-    return tem_data
+# nginx 日志用于测试
+NGINX_ACCESS = db.wangqian_access
+
+# druglistrpc
+DRUGLISTRPC_OUT = db.druglistrpc_out
+
+DRUGLISTRPC_ERROR = db.druglistrpc_error
+

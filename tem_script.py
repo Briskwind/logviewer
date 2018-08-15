@@ -3,18 +3,18 @@ import pymongo
 
 client = pymongo.MongoClient(host='127.0.0.1', port=27017, tz_aware=False)
 
-db = client.test
+db = client.test1
 collection = db.wq_access
 
 # 使用新 collection 会自动创建
 # new_collection = db.new_collection
-# data = {
-#     "name": 'name'
-# }
+data = {
+    "name": 'name'
+}
 # new_collection.insert(data)
 
 # 增
-# collection.insert(data)
+collection.insert(data)
 
 # 删
 # res = collection.remove()
@@ -38,9 +38,13 @@ collection = db.wq_access
 
 import time
 
-a = "2011-09-28 10:00:00"
+# a = "2011-09-28 10:00:00"
+#
+# date_time = datetime.datetime.strptime(a,'%Y-%m-%d %H:%M:%S')
+# print('date_time', type(date_time))
 
-date_time = datetime.datetime.strptime(a,'%Y-%m-%d %H:%M:%S')
-print('date_time', type(date_time))
 
 
+# a = '/Users/xufengxu/tem_data/logs/wangqian_access.log'
+# res = a.split('/')
+# print(res[-1])

@@ -1,29 +1,26 @@
 import os
 import time
 import datetime
-from config.mongo_conf import client
+from config.mongo_conf import db, ACCESS, NGINX_ACCESS, DRUGLISTRPC_OUT
 from logviewer.settings import WATCH_PATH
 from watchdog.observers import Observer
 from watchdog.events import FileSystemEventHandler
 
 
-def save_data(log_data):
+def save_data(log_data, collection):
     """ 保存到mongo db"""
-    db = client.test
-    wq_access = db.wq_access
     for log in log_data[::-1]:
         data = {
             "log": log,
             "create_date": datetime.datetime.now()
         }
-        wq_access.insert(data)
+        collection.insert(data)
 
 
-def get_last_log():
+def get_last_log(collection):
     """ 获取最新的日志信息"""
-    db = client.test
-    wq_access = db.wq_access
-    last_log = wq_access.find({}).sort("create_date", -1).limit(1)
+
+    last_log = collection.find({}).sort("create_date", -1).limit(1)
     log = None
     for i in list(last_log):
         log = i['log']
@@ -31,11 +28,21 @@ def get_last_log():
     return log
 
 
-def get_log(log_path):
-    """获取日志内容"""
-    data_list = []
+def deal_log_file(log_path):
+    """获取某个日志内容"""
+    log_name = log_path.split('/')[-1]
 
-    last_log = get_last_log()
+    if log_name == 'access.log':
+        collection = ACCESS
+    elif log_name == 'wangqian_access.log':
+        collection = NGINX_ACCESS
+    elif log_name == 'druglistrpc-out-2.log':
+        collection = DRUGLISTRPC_OUT
+    else:
+        collection = db.default
+
+    data_list = []
+    last_log = get_last_log(collection)
     with open(log_path, 'r') as file:
         lines = file.readlines()
         for line in lines[::-1]:
@@ -45,17 +52,20 @@ def get_log(log_path):
             data_list.append(sentence)
             if last_log is None and len(data_list) == 100:
                 break
-    save_data(data_list)
+    save_data(data_list, collection)
 
 
 class FileEventHandler(FileSystemEventHandler):
+    """ 监听文件改变"""
+
     def __init__(self):
         FileSystemEventHandler.__init__(self)
 
     def on_modified(self, event):
         if not event.is_directory:
             path = os.path.realpath(event.src_path)
-            get_log(path)
+            print('改变文件', path)
+            deal_log_file(path)
 
 
 if __name__ == "__main__":

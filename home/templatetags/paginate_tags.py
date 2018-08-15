@@ -6,6 +6,15 @@ from logviewer.settings import PAGE_COUNT
 register = template.Library()
 
 
+@register.filter(name='delete_space_tag')
+def delete_space(content):
+    if content:
+        first = content.strip()[0]
+        if ord(first) > 90 or ord(first) < 65:
+            content = '.....' + content
+    return content
+
+
 @register.simple_tag(name='minustwo')
 def some_function(value):
     return value - 2

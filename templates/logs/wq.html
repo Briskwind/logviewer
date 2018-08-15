@@ -51,7 +51,9 @@
 
         <div class="border" id="log_container">
             {% for item in items %}
-                <p>{{ item.log }}</p>
+
+                <p>{{ item.log|striptags|delete_space_tag }}</p>
+
             {% endfor %}
         </div>
 
@@ -88,10 +90,10 @@
         var end = getQueryString('end');
         var key_words = getQueryString('key_words');
         if (start) {
-            $('#start').val(decodeURIComponent(start) )
+            $('#start').val(decodeURIComponent(start))
         }
         if (end) {
-            $('#end').val(decodeURIComponent(end) )
+            $('#end').val(decodeURIComponent(end))
         }
         if (key_words) {
             var decode = decodeURIComponent(key_words)
