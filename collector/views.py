@@ -1,7 +1,6 @@
 import json
 
-from config.mongo_conf import NGINX_ACCESS, ACCESS, DRUGLISTRPC_OUT
-
+from extensions.mongo_conf import NGINX_ACCESS, ACCESS, DRUGLISTRPC_OUT
 from rest_framework.views import APIView
 from django.shortcuts import render
 
