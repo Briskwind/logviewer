@@ -48,3 +48,23 @@ import time
 # a = '/Users/xufengxu/tem_data/logs/wangqian_access.log'
 # res = a.split('/')
 # print(res[-1])
+
+
+import time
+import datetime
+
+import sys
+import os
+
+# sys.path.append('/Users/xufengxu/tianzhu_pro/logviewer/extensions')
+
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", "logviewer.settings")
+import django
+
+django.setup()
+
+from home.models import LogUser
+
+res = LogUser.objects.all()
+
+print('res', res)

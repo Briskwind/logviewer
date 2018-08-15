@@ -1,8 +1,13 @@
 import os
 import time
 import datetime
-from config.mongo_conf import db, ACCESS, NGINX_ACCESS, DRUGLISTRPC_OUT
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", "logviewer.settings")
+import django
+
+django.setup()
+
 from logviewer.settings import WATCH_PATH
+from extensions.mongo_conf import db, ACCESS, NGINX_ACCESS, DRUGLISTRPC_OUT
 from watchdog.observers import Observer
 from watchdog.events import FileSystemEventHandler
 
@@ -69,6 +74,7 @@ class FileEventHandler(FileSystemEventHandler):
 
 
 if __name__ == "__main__":
+    print(1)
     event_handler = FileEventHandler()
     observer = Observer()
     observer.schedule(event_handler, WATCH_PATH, recursive=True)
