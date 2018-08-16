@@ -1,6 +1,6 @@
 import json
 
-from extensions.mongo_conf import NGINX_ACCESS, ACCESS, DRUGLISTRPC_OUT, WANGQIANCELERY_ERR
+from extensions.mongo_conf import ACCESS, DRUGLISTRPC_OUT, WANGQIANCELERY_ERR
 from rest_framework.views import APIView
 from django.shortcuts import render
 
@@ -26,7 +26,6 @@ class WqLogs(APIView):
         start = PAGE_COUNT * (page - 1)
         end = start + PAGE_COUNT
         data = mongo_wrap(res)
-
         context = dict(
 
             data=data[::-1],

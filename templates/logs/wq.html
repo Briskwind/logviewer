@@ -52,7 +52,7 @@
         <div class="border" id="log_container">
             {% for item in items %}
 
-                <p>{{ item.log|striptags|delete_space_tag }}</p>
+                <p style="margin-top: 3px">{{ item.log|delete_space_tag }}</p>
 
             {% endfor %}
         </div>

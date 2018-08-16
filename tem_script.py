@@ -4,7 +4,7 @@ import pymongo
 client = pymongo.MongoClient(host='127.0.0.1', port=27017, tz_aware=False)
 
 db = client.test1
-collection = db.wq_access
+collection = db.access
 
 # 使用新 collection 会自动创建
 # new_collection = db.new_collection
@@ -31,8 +31,8 @@ collection.insert(data)
 #     print(i['log'])
 #     print(i['create_date'].strftime('%Y-%m-%d %H:%M:%S'))
 # 模糊查询
-# data2 = collection.find({"name":{"$regex":"real"}})
-# print('data2', list(data2))
+data2 = collection.find({"name":{"$regex":"ProductMaterialDocumentFile"}})
+print('data2', list(data2))
 
 
 
@@ -56,15 +56,3 @@ import datetime
 import sys
 import os
 
-# sys.path.append('/Users/xufengxu/tianzhu_pro/logviewer/extensions')
-
-os.environ.setdefault("DJANGO_SETTINGS_MODULE", "logviewer.settings")
-import django
-
-django.setup()
-
-from home.models import LogUser
-
-res = LogUser.objects.all()
-
-print('res', res)

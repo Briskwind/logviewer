@@ -1,8 +1,5 @@
-import datetime
-import json
 
 import pymongo
-from bson import ObjectId
 
 from logviewer.settings import MONGO_HOST, MONGO_PORT
 
