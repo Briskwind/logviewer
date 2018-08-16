@@ -1,4 +1,4 @@
-import os
+import os, sys
 import time
 import datetime
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "logviewer.settings")
@@ -7,7 +7,7 @@ import django
 django.setup()
 
 from logviewer.settings import WATCH_PATH
-from extensions.mongo_conf import db, ACCESS, NGINX_ACCESS, DRUGLISTRPC_OUT
+from extensions.mongo_conf import db, ACCESS, NGINX_ACCESS, DRUGLISTRPC_OUT, WANGQIANCELERY_ERR
 from watchdog.observers import Observer
 from watchdog.events import FileSystemEventHandler
 
@@ -43,6 +43,8 @@ def deal_log_file(log_path):
         collection = NGINX_ACCESS
     elif log_name == 'druglistrpc-out-2.log':
         collection = DRUGLISTRPC_OUT
+    elif log_name == 'wangqiancelery.err.log':
+        collection = WANGQIANCELERY_ERR
     else:
         collection = db.default
 
@@ -69,12 +71,10 @@ class FileEventHandler(FileSystemEventHandler):
     def on_modified(self, event):
         if not event.is_directory:
             path = os.path.realpath(event.src_path)
-            print('改变文件', path)
             deal_log_file(path)
 
 
 if __name__ == "__main__":
-    print(1)
     event_handler = FileEventHandler()
     observer = Observer()
     observer.schedule(event_handler, WATCH_PATH, recursive=True)
@@ -85,3 +85,5 @@ if __name__ == "__main__":
     except KeyboardInterrupt:
         observer.stop()
     observer.join()
+
+

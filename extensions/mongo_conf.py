@@ -19,6 +19,8 @@ NGINX_ACCESS = db.wangqian_access
 
 # druglistrpc
 DRUGLISTRPC_OUT = db.druglistrpc_out
-
 DRUGLISTRPC_ERROR = db.druglistrpc_error
 
+
+# 网签celery
+WANGQIANCELERY_ERR = db.wangqiancelery_err

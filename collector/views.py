@@ -1,6 +1,6 @@
 import json
 
-from extensions.mongo_conf import NGINX_ACCESS, ACCESS, DRUGLISTRPC_OUT
+from extensions.mongo_conf import NGINX_ACCESS, ACCESS, DRUGLISTRPC_OUT, WANGQIANCELERY_ERR
 from rest_framework.views import APIView
 from django.shortcuts import render
 
@@ -48,7 +48,7 @@ class CeleryLogs(APIView):
         key_words = request.GET.get('key_words', None)
         page = int(request.GET.get('page', 1))
 
-        res = get_data_by_conditions(start_time, end_time, key_words, NGINX_ACCESS)
+        res = get_data_by_conditions(start_time, end_time, key_words, WANGQIANCELERY_ERR)
 
         start = PAGE_COUNT * (page - 1)
         end = start + PAGE_COUNT
