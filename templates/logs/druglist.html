@@ -71,7 +71,7 @@
 
     <script>
 
-        var base_url = '/collector/druglist/?start=';
+        var base_url = '/collector/druglist/';
 
         laydate.render({
             elem: '#start'
@@ -110,7 +110,8 @@
 
             var encode = encodeURIComponent(key_words)
 
-            location.href = base_url + start + '&end=' + end + '&key_words=' + encode
+            location.href = base_url + '?start=' + start + '&end=' + end + '&key_words=' + encode
+
 
 
         })
@@ -133,7 +134,8 @@
             var start = $('#start').val()
             var end = $('#end').val()
             var key_words = $('#key_words').val()
-            location.href = base_url + page + '&start=' + start + '&end=' + end + '&key_words=' + key_words
+
+            location.href = base_url +'?page=' + page + '&start=' + start + '&end=' + end + '&key_words=' + key_words
 
         })
 

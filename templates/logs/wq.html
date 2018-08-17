@@ -71,6 +71,7 @@
 
     <script>
 
+        var base_url = '/collector/wq/';
 
         laydate.render({
             elem: '#start'
@@ -109,9 +110,7 @@
 
             var encode = encodeURIComponent(key_words)
 
-
-            var url = '/collector/wq/?start=' + start + '&end=' + end + '&key_words=' + encode
-            location.href = url;
+            location.href = base_url + '?start=' + start + '&end=' + end + '&key_words=' + encode
 
 
         })
@@ -134,7 +133,7 @@
             var start = $('#start').val()
             var end = $('#end').val()
             var key_words = $('#key_words').val()
-            location.href = '/collector/wq/?page=' + page + '&start=' + start + '&end=' + end + '&key_words=' + key_words
+            location.href = base_url  +'?page=' + page + '&start=' + start + '&end=' + end + '&key_words=' + key_words
 
         })
 

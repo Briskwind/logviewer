@@ -1,9 +1,5 @@
 <div id="pagenavi" class="noselect">
-    {% if article_list.has_previous %}
-        <a class="previous-page page" href="?page={{ article_list.previous_page_number }}">
-            <span class="icon-previous"></span>上一页
-        </a>
-    {% endif %}
+
 
     {% if first_page == current_page %}
         <span class="first-page current page">1</span>
@@ -35,9 +31,5 @@
         {% endif %}
     {% endif %}
 
-    {% if article_list.has_next %}
-        <a class="next-page page">
-            下一页<span class="icon-next"></span>
-        </a>
-    {% endif %}
+
 </div>

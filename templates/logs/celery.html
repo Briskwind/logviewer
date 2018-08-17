@@ -68,7 +68,7 @@
 
 
     <script>
-
+        var base_url = '/collector/celery/'
 
         laydate.render({
             elem: '#start'
@@ -88,10 +88,10 @@
         var end = getQueryString('end');
         var key_words = getQueryString('key_words');
         if (start) {
-            $('#start').val(decodeURIComponent(start) )
+            $('#start').val(decodeURIComponent(start))
         }
         if (end) {
-            $('#end').val(decodeURIComponent(end) )
+            $('#end').val(decodeURIComponent(end))
         }
         if (key_words) {
             var decode = decodeURIComponent(key_words)
@@ -107,9 +107,7 @@
 
             var encode = encodeURIComponent(key_words)
 
-
-            var url = '/collector/celery/?start=' + start + '&end=' + end + '&key_words=' + encode
-            location.href = url;
+            location.href = base_url + '?start=' + start + '&end=' + end + '&key_words=' + encode
 
 
         })
@@ -132,7 +130,7 @@
             var start = $('#start').val()
             var end = $('#end').val()
             var key_words = $('#key_words').val()
-            location.href = '/collector/celery/?page=' + page + '&start=' + start + '&end=' + end + '&key_words=' + key_words
+            location.href = base_url +'?page=' + page + '&start=' + start + '&end=' + end + '&key_words=' + key_words
 
         })
 
