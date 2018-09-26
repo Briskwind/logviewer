@@ -7,7 +7,7 @@ import django
 
 django.setup()
 
-from logviewer.settings import WATCH_PATH
+from logviewer.settings import WATCH_PATH, XSL_WATCH_PATH
 from extensions.mongo_conf import db, XSL_ACCESS, XSL_API_ACCESS, XSL_EYAOS_ERR
 from watchdog.observers import Observer
 from watchdog.events import FileSystemEventHandler
@@ -77,7 +77,7 @@ class FileEventHandler(FileSystemEventHandler):
 if __name__ == "__main__":
     event_handler = FileEventHandler()
     observer = Observer()
-    observer.schedule(event_handler, WATCH_PATH, recursive=True)
+    observer.schedule(event_handler, XSL_WATCH_PATH, recursive=True)
     observer.start()
     try:
         while True:
