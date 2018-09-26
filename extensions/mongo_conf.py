@@ -18,6 +18,18 @@ NGINX_ACCESS = db.wangqian_access
 DRUGLISTRPC_OUT = db.druglistrpc_out
 DRUGLISTRPC_ERROR = db.druglistrpc_error
 
-
 # 网签celery
 WANGQIANCELERY_ERR = db.wangqiancelery_err
+
+
+# 新势力相关
+XSL_ACCESS = db.xsl_access
+
+XSL_API_ACCESS = db.xsl_api_access
+
+XSL_EYAOS_ERR = db.xsl_eyaos_stderr
+
+
+
+
+
