@@ -1,0 +1,138 @@
+{% extends 'base.html' %}
+{% load paginate_tags %}
+
+{% block title %}新势力{% endblock %}
+{% block mainer %}
+    <style type="text/css">
+
+    </style>
+
+    <div class="layui-form">
+        <div class="layui-form-item">
+
+            <div class="layui-inline">
+                <label class="layui-form-label">启始时间</label>
+                <div class="layui-input-inline">
+                    <input type="text" class="layui-input" id="start" placeholder="yyyy-MM-dd HH:mm:ss" lay-key="6">
+                </div>
+            </div>
+
+
+            <div class="layui-inline">
+                <label class="layui-form-label">结束时间</label>
+                <div class="layui-input-inline">
+                    <input type="text" class="layui-input" id="end" placeholder="yyyy-MM-dd HH:mm:ss" lay-key="7">
+                </div>
+            </div>
+
+
+            <div class="layui-inline">
+                <label class="layui-form-label">筛选关键字</label>
+                <div class="layui-input-block">
+                    <input type="text" id="key_words" placeholder="请输入关键字" class="layui-input">
+                </div>
+            </div>
+
+
+            <div class="layui-inline">
+                <button class="layui-btn layui-btn-normal" id="search">筛选</button>
+
+            </div>
+
+
+        </div>
+
+    </div>
+
+
+
+    <div class="body-div">
+
+
+        <div class="border" id="log_container">
+            {% for item in items %}
+                <p style="margin-top: 3px">{{ item.log }}</p>
+            {% endfor %}
+        </div>
+
+
+        {% paginate_tag data %}
+        {% include 'pagination.html' %}
+
+
+    </div>
+
+{% endblock %}
+
+{% block script %}
+
+
+    <script>
+        var base_url = '/collector/xsl_eyaos_err/'
+
+        laydate.render({
+            elem: '#start'
+            , type: 'datetime'
+        });
+
+
+        laydate.render({
+            elem: '#end'
+            , type: 'datetime'
+        });
+
+
+        // 渲染关键字
+
+        var start = getQueryString('start');
+        var end = getQueryString('end');
+        var key_words = getQueryString('key_words');
+        if (start) {
+            $('#start').val(decodeURIComponent(start))
+        }
+        if (end) {
+            $('#end').val(decodeURIComponent(end))
+        }
+        if (key_words) {
+            var decode = decodeURIComponent(key_words)
+            $('#key_words').val(decode)
+        }
+
+
+        $('#search').click(function () {
+
+            var start = $('#start').val()
+            var end = $('#end').val()
+            var key_words = $('#key_words').val()
+
+            var encode = encodeURIComponent(key_words)
+
+            location.href = base_url + '?start=' + start + '&end=' + end + '&key_words=' + encode
+
+
+        })
+
+
+        function getQueryString(name) {
+            var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
+            var r = window.location.search.substr(1).match(reg);  //获取url中"?"符后的字符串并正则匹配
+            var context = "";
+            if (r != null)
+                context = r[2];
+            reg = null;
+            r = null;
+            return context == null || context == "" || context == "undefined" ? "" : context;
+        }
+
+        $('.page').click(function () {
+            var page = $(this).html()
+
+            var start = $('#start').val()
+            var end = $('#end').val()
+            var key_words = $('#key_words').val()
+            location.href = base_url +'?page=' + page + '&start=' + start + '&end=' + end + '&key_words=' + key_words
+
+        })
+
+    </script>
+{% endblock script %}
